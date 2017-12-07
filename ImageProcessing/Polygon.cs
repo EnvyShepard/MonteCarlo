@@ -184,9 +184,12 @@ namespace ImageProcessing
                 }
             }
 
-            return IsDotInsidePolygon(points1[0], points2);
-            
+            foreach (Point p in points1) {
+                if (IsDotInsidePolygon(p, points2))
+                    return true;
+            }
 
+            return false;
         }
 
         private static bool IsDotInsidePolygon(Point point, Point[] points) {
