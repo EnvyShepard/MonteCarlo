@@ -20,7 +20,6 @@ namespace ImageProcessing {
         }
 
         public static void Draw(PictureBox pb, List<Polygon> figures, bool checkIntersections = false) {
-
             var gr = pb.CreateGraphics();
             gr.Clear(Color.White);
             Pen pen = new Pen(Color.Black);
@@ -29,7 +28,6 @@ namespace ImageProcessing {
                 foreach (var figure in figures) {
                     DrawFigure(gr, figure, pen);
                 }
-
             }
         }
 
@@ -62,24 +60,6 @@ namespace ImageProcessing {
                     if (point.Y < 0 || point.X < 0 || point.X > rightBorder || point.Y > bottomBorder)
                         return true;
             return false;
-        }
-
-        public static void Positioning(PictureBox pb, List<Polygon> polygons, int rightBorder, int bottomBorder) {
-            
-
-            PolCounter it = new PolCounter(polygons, rightBorder, bottomBorder, polygons.Count);
-
-            it.def();
-            while ( it.inc()) {
-                
-                var t = it.SetPolygons();
-                
-                if (!CheckIntersection(t, rightBorder, bottomBorder)) {
-                    Draw(pb, t);
-                }
-            }
-
-
         }
 
         public static double CalculateMaxHeight(List<Polygon> list) {
@@ -120,67 +100,6 @@ namespace ImageProcessing {
                 if (iterations != -1) iterations--;
             }
 
-
-        }
-    }
-
-
-
-
-    class PolCounter {
-
-        List<Polygon> list;
-
-        int[] limits;
-
-        public int[] vector;
-
-        private int count;
-
-        public PolCounter(List<Polygon> list, int maxX, int maxY, int count) {
-            this.list = list;
-            limits = new int[3];
-            limits[0] = maxX;
-            limits[1] = maxY;
-            limits[2] = 360;
-            this.count = count;
-            vector = new int[count * 3];
-        }
-
-        public void def() {
-            vector = vector.Select(x => x = 0).ToArray();
-        }
-
-        public bool inc() {
-
-            for (int i = 0; i < vector.Length; i += 3) {
-                for (int j = 0; j < 2; j++) {
-                    if (vector[i + j] < limits[j]) {
-                        vector[i + j]++;                       
-                        return true;
-                    }
-                    else {
-                        vector[i + j] = 0; 
-                    }
-                }
-            }
-            return false;
-        }
-
-        // Эта штука еле работает. Первый вариант
-        
-        public List<Polygon> SetPolygons() {
-           
-            for(int i = 0; i < count; i++) {
-                list[i].MoveTo(vector[i * 3], vector[i * 3 + 1]);
-            }
-            return list;    
-            
-        }
-        
-
-        public int[] GetPolygonsVector() {
-            return vector;
 
         }
     }
