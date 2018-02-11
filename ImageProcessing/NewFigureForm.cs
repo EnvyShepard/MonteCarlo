@@ -14,9 +14,11 @@ namespace ImageProcessing {
         bool canInsert = true;
         private Polygon pol;
         private Point MovingPoint;
-        private List<Polygon> polygons;
+        private Dictionary<string, Polygon> polygons;
 
-        public NewFigureForm(List<Polygon> polygons) {
+        
+
+        public NewFigureForm(Dictionary<string, Polygon> polygons) {
             InitializeComponent();
             this.polygons = polygons;
 
@@ -26,6 +28,10 @@ namespace ImageProcessing {
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.Columns.Add("x", "X");
             dataGridView1.Columns.Add("y", "Y ");
+
+            dataGridView2.AllowUserToAddRows = false;
+            dataGridView2.Columns.Add("name", "Name");
+            dataGridView2.Columns.Add("count", "Count ");
         }
 
         private void pictureBox1_Click(object sender, EventArgs e) {
@@ -104,12 +110,20 @@ namespace ImageProcessing {
         }
 
         private void saveBtn_Click(object sender, EventArgs e) {
-            while ( numericUpDown1.Value > 0) {
-                polygons.Add(pol);
-                numericUpDown1.Value--;
-            }
-            Close();
+            pol.SetName(nameTxtBox.Text);
+            polygons.Add(nameTxtBox.Text, pol);
+            dataGridView2.Rows.Add(nameTxtBox.Text, "1");
+            
+           
 
+        }
+
+        private void newBtn_Click(object sender, EventArgs e)
+        {
+            pol = null;
+            dataGridView1.Rows.Clear();
+            canInsert=true;
+            
         }
     }
 }

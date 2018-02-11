@@ -13,6 +13,7 @@ namespace ImageProcessing
     public class Point {
         double x;
         double y;
+        
 
         public Point(int x, int y) {
             this.x = x;
@@ -71,6 +72,7 @@ namespace ImageProcessing
 
     public class Polygon : IEnumerable {
 
+        string name;
         LinkedList<Point> _pointsList;
         private static Random r = new Random();
 
@@ -106,6 +108,17 @@ namespace ImageProcessing
         }
 
         internal Point GetLastPoint() => _pointsList.Last.Value;
+
+        internal void SetName(string text)
+        {
+            name = text;
+        }
+
+        internal string GetName()
+        {
+            return name;
+        }
+
         internal Point GetFirstPoint() => _pointsList.First.Value;
 
         internal void SetPoint(int index, object value1, object value2) {

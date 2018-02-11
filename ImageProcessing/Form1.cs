@@ -13,12 +13,12 @@ namespace ImageProcessing
     public partial class Form1 : Form
     {
 
-        List<Polygon> polygons;
+        Dictionary<string, Polygon> polygons;
 
         public Form1()
         {
             InitializeComponent();
-            polygons = new List<Polygon>();
+            polygons = new Dictionary<string, Polygon>();
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -85,7 +85,7 @@ namespace ImageProcessing
         private void DrawBtn_Click(object sender, EventArgs e) {
             Graphics g = pictureBox1.CreateGraphics();
             
-            Presenter.MonteCarloMethod(pictureBox1, polygons, (int)numericUpDown1.Value,(int) numericUpDown2.Value);
+            Presenter.MonteCarloMethod(pictureBox1, polygons.Values.ToList(), (int)numericUpDown1.Value,(int) numericUpDown2.Value);
             g.DrawLine(new Pen(Color.Black), (int)numericUpDown1.Value, 0, (int)numericUpDown1.Value, (int)numericUpDown2.Value);
             g.DrawLine(new Pen(Color.Black), 0, (int)numericUpDown2.Value ,(int)numericUpDown1.Value, (int)numericUpDown2.Value);
            
