@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Threading;
+using System.IO;
 
 namespace ImageProcessing {
     public static class Presenter {
@@ -122,10 +123,29 @@ namespace ImageProcessing {
 
 
         }
+        
+        public static void SaveToFile(String filePath, Dictionary<String, Polygon> polygon){
+
+
+            var file = File.Create(filePath);
+            file.Close();
+            StreamWriter sw = File.CreateText(filePath);
+            foreach (var val in polygon)
+            {
+                sw.Write(val.Key);
+                var tmp = val.Value.GetStandartPoints();
+                foreach (var p in tmp)
+                {
+                    sw.Write(",");
+                    sw.Write(p.X);
+                    sw.Write(":");
+                    sw.Write(p.Y);
+                }
+                sw.WriteLine();
+            }
+            sw.Close();
+        }
     }
-
-
-
 
     class PolCounter {
 

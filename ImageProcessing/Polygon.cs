@@ -166,7 +166,6 @@ namespace ImageProcessing
             _pointsList.RemoveLast();
             foreach (var p in _pointsList)
                 p.Rotate(center, angle);
-
             _pointsList.AddLast(_pointsList.First.Value);
 
         }

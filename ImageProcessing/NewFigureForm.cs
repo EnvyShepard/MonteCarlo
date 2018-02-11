@@ -16,8 +16,6 @@ namespace ImageProcessing {
         private Point MovingPoint;
         private Dictionary<string, Polygon> polygons;
 
-        
-
         public NewFigureForm(Dictionary<string, Polygon> polygons) {
             InitializeComponent();
             this.polygons = polygons;
@@ -110,12 +108,16 @@ namespace ImageProcessing {
         }
 
         private void saveBtn_Click(object sender, EventArgs e) {
+            
             pol.SetName(nameTxtBox.Text);
+            if (polygons.ContainsKey(nameTxtBox.Text))
+            {
+                MessageBox.Show("error");
+                return;
+            }
+
             polygons.Add(nameTxtBox.Text, pol);
             dataGridView2.Rows.Add(nameTxtBox.Text, "1");
-            
-           
-
         }
 
         private void newBtn_Click(object sender, EventArgs e)
@@ -124,6 +126,11 @@ namespace ImageProcessing {
             dataGridView1.Rows.Clear();
             canInsert=true;
             
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Presenter.SaveToFile("file", polygons);
         }
     }
 }
